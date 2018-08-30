@@ -52,6 +52,11 @@ public class AddressBook {
     private static final String LINE_PREFIX = "|| ";
 
     /**
+     * Show this to user at default
+     */
+    private static final String HELP_DESC = "Type \"help\" to see a list of command.";
+
+    /**
      * A platform independent line separator.
      */
     private static final String LS = System.lineSeparator() + LINE_PREFIX;
@@ -210,14 +215,21 @@ public class AddressBook {
         showWelcomeMessage();
         processProgramArgs(args);
         loadDataFromStorage();
+        showHelpDescription();
+        runCommand(getUserInput());
+        return;
+    }
+
+    private static void runCommand(String userCommand) {
         while (true) {
-            String userCommand = getUserInput();
             echoUserCommand(userCommand);
-            String feedback = executeCommand(userCommand);
-            showResultToUser(feedback);
+            showResultToUser(executeCommand(userCommand));
         }
     }
 
+    private static void showHelpDescription() {
+        showToUser(HELP_DESC);
+    }
     /*
      * NOTE : =============================================================
      * The method header comment can be omitted if the method is trivial
